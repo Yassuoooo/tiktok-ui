@@ -6,6 +6,7 @@ import Following from '~/pages/Following';
 import Upload from '~/pages/Upload';
 import Search from '~/pages/Search';
 
+// public routes:
 const publicRoutes = [
     {
         path: '/',
@@ -27,6 +28,7 @@ const publicRoutes = [
     },
 ];
 
+// private routes:
 const privateRoutes = [];
 
 export { publicRoutes, privateRoutes };
