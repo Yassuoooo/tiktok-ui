@@ -28,9 +28,14 @@
     
 }
 
+.search, .search-result {
+    width: 320px;
+}
+
 .search {
     position: relative;
-    width: 361px;
+    // width: 361px;
+    // width: 320px;
     // height: 46px;
     height: var(--search-height);
     padding-left: 16px;
@@ -87,6 +92,13 @@
         background-color: rgba(22, 24, 35, 0.06);
     }
 
+}
+
+.search-title {
+    padding: 5px 12px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: rgba(22, 24, 35, 0.5);
 }
 
 .clear,
