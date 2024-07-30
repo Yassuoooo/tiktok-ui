@@ -39,6 +39,7 @@ function Button({
 
     const classes = cx('wrapper', {
         [className]: className,
+        // thêm CSS từ prop className nếu className được truyền vào, cho phép CSS từ bên ngoài component Button.
         primary,
         outline,
         text,
