@@ -7,11 +7,18 @@ import {
     faEllipsisVertical,
     faMagnifyingGlass,
     faKeyboard,
-    faSignIn,
     faSpinner,
     faEarthEurope,
+    faCloudArrowUp,
+    faMessage,
+    faUser,
+    faCoins,
+    faGear,
+    faSignOut,
 } from '@fortawesome/free-solid-svg-icons';
-import Tippy from '@tippyjs/react/headless';
+import HeadlessTippy from '@tippyjs/react/headless';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
 import Button from '~/components/Button';
 import styles from './Header.module.scss';
@@ -23,6 +30,7 @@ import { AccountItem as Account } from '~/components/AccountItem';
 // console.log(images.logo);
 const cx = classNames.bind(styles); // bind styles vào function cx giúp css tiện hơn
 
+// currentUser = false:
 const MENU_ITEMS = [
     {
         icon: <FontAwesomeIcon icon={faEarthEurope} />,
@@ -54,8 +62,12 @@ const MENU_ITEMS = [
     },
 ];
 
+// console.log(Array.isArray(MENU_ITEMS)); // true
+
 function Header() {
     const [searchResult, setSearchResult] = useState([]);
+
+    const currentUser = true;
 
     useEffect(() => {
         setTimeout(() => {
@@ -73,15 +85,44 @@ function Header() {
         }
     };
 
+    // currentUser = true:
+    const userMenu = [
+        {
+            icon: <FontAwesomeIcon icon={faUser} />,
+            title: 'View Profile',
+            to: '/userIns',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faCoins} />,
+            title: 'Get Coins',
+            to: '/coin',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faGear} />,
+            title: 'Settings',
+            to: '/settings',
+        },
+        ...MENU_ITEMS,
+        {
+            icon: <FontAwesomeIcon icon={faSignOut} />,
+            title: 'Log Out',
+            to: '/logout',
+            separate: true,
+        },
+    ];
+
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
+                {/* Logo: */}
                 <div className={cx('logo')}>
                     <img src={images.logo} alt="Logo" />
                 </div>
-                <Tippy // hiển thị bảng search bên dưới thẻ input
+
+                {/* Search: */}
+                <HeadlessTippy // hiển thị bảng search bên dưới thẻ input
                     interactive={true}
-                    visible={searchResult.length > 0} // chỉ hiển thị tippy khi có giá trị nhập trong thẻ input
+                    visible={searchResult.length > 0} // chỉ hiển thị HeadlessTippy khi có giá trị nhập trong thẻ input
                     render={(attrs) => (
                         <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                             <PopperWrapper>
@@ -108,14 +149,40 @@ function Header() {
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </button>
                     </div>
-                </Tippy>
+                </HeadlessTippy>
+
+                {/* Action: */}
                 <div className={cx('actions')}>
-                    <Button text>Upload</Button>
-                    <Button primary>Log in</Button>
-                    <MenuItems items={MENU_ITEMS} onChange={handleMenuChange}>
-                        <button className={cx('more-btn')}>
-                            <FontAwesomeIcon icon={faEllipsisVertical} />
-                        </button>
+                    {currentUser ? ( // nếu currentUser là true tương đương user đã login thì hiển thị:
+                        <>
+                            <Tippy delay={[0, 200]} content="Upload Video" placement="bottom">
+                                <button className={cx('action-btn')}>
+                                    <FontAwesomeIcon icon={faCloudArrowUp} />
+                                </button>
+                            </Tippy>
+                        </>
+                    ) : (
+                        // nếu ko có thì hiển thị:
+                        <>
+                            <Button text>Upload</Button>
+                            <Button primary>Log in</Button>
+                        </>
+                    )}
+                    <MenuItems items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
+                        {/* nếu có currentUser thì dùng userMenu, ngược lại dùng MENU_ITEMS */}
+                        {currentUser ? (
+                            <img
+                                src="https://www.sideshow.com/wp/wp-content/uploads/2022/09/Vergil-Closeup-Devil-May-Cry.jpg"
+                                className={cx('user-avatar')}
+                                alt="scum"
+                            />
+                        ) : (
+                            <>
+                                <button className={cx('more-btn')}>
+                                    <FontAwesomeIcon icon={faEllipsisVertical} />
+                                </button>
+                            </>
+                        )}
                     </MenuItems>
                 </div>
             </div>

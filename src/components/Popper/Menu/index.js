@@ -15,8 +15,9 @@ function Menu({ children, items = [], onChange = defaultFn }) {
     const [history, setHistory] = useState([{ data: items }]);
 
     const current = history[history.length - 1]; // lấy phần tử cuối mảng
-    // console.log(current);
-    // console.log(current.data);
+    console.log(history); // in ra mảng history
+    console.log(current); // in ra phần tử cuối mảng của history là data: items
+    console.log(current.data[2]); // in ra phần tử cuối của data trong current
 
     const renderItems = () => {
         // return items.map((item, index) => (
@@ -33,7 +34,6 @@ function Menu({ children, items = [], onChange = defaultFn }) {
                     data={item}
                     onClick={() => {
                         if (isParent) {
-                            console.log(item.subMenu);
                             setHistory((prev) => [...prev, item.subMenu]);
                             // tạo mảng mới, giữ lại item mảng cũ là data: items và đẩy item.subMenu vào
                         } else {
@@ -48,24 +48,26 @@ function Menu({ children, items = [], onChange = defaultFn }) {
     return (
         <Tippy
             interactive={true}
+            offset={[12, 8]}
             delay={[0, 700]}
             placement="bottom-end"
             render={(attrs) => (
                 <div className={cx('content')} tabIndex="-1" {...attrs}>
                     <PopperWrapper className={cx('menu-popper')}>
-                        {history.length > 1 && (
+                        {history.length > 1 /* nếu mảng history nhiều hơn 1 item thì hiển thị component Header */ && (
                             <Header
                                 title="Language"
                                 onBack={() => {
+                                    // click vào icon back
                                     setHistory((prev) => prev.slice(0, prev.length - 1)); // xóa phần tử cuối mảng bằng slice
                                 }}
                             />
                         )}
-                        {/* nếu mảng history có nhiều hơn 1 item thì hiển thị thẻ Header */}
                         {renderItems()}
                     </PopperWrapper>
                 </div>
             )}
+            onHide={() => setHistory((prev) => prev.slice(0, 1))}
         >
             {children}
         </Tippy>
