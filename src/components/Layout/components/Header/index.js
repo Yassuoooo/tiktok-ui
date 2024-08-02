@@ -8,9 +8,7 @@ import {
     faMagnifyingGlass,
     faKeyboard,
     faSpinner,
-    faEarthEurope,
     faCloudArrowUp,
-    faMessage,
     faUser,
     faCoins,
     faGear,
@@ -26,6 +24,8 @@ import images from '~/assets/images';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { Menu as MenuItems } from '~/components/Popper';
 import { AccountItem as Account } from '~/components/AccountItem';
+import { EnglishIcon } from '~/components/Icons';
+import { Image } from '~/components/Image';
 
 // console.log(images.logo);
 const cx = classNames.bind(styles); // bind styles vào function cx giúp css tiện hơn
@@ -33,7 +33,8 @@ const cx = classNames.bind(styles); // bind styles vào function cx giúp css ti
 // currentUser = false:
 const MENU_ITEMS = [
     {
-        icon: <FontAwesomeIcon icon={faEarthEurope} />,
+        // icon: <FontAwesomeIcon icon={faEarthEurope} />,
+        icon: <EnglishIcon />,
         title: 'English',
         subMenu: {
             title: 'Language',
@@ -171,8 +172,10 @@ function Header() {
                     <MenuItems items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
                         {/* nếu có currentUser thì dùng userMenu, ngược lại dùng MENU_ITEMS */}
                         {currentUser ? (
-                            <img
+                            <Image // component Image cần ref để truyền cho Tippy trong component MenuItems
                                 src="https://www.sideshow.com/wp/wp-content/uploads/2022/09/Vergil-Closeup-Devil-May-Cry.jpg"
+                                fallback="https://fullstack.edu.vn/assets/f8-icon-lV2rGpF0.png"
+                                // src="fgfg" // hiển thị noImage nếu src lỗi
                                 className={cx('user-avatar')}
                                 alt="scum"
                             />
