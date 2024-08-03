@@ -1,31 +1,26 @@
-import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faCircleXmark,
-    faCircleQuestion,
     faEllipsisVertical,
-    faMagnifyingGlass,
     faKeyboard,
-    faSpinner,
     faCloudArrowUp,
     faUser,
     faCoins,
     faGear,
     faSignOut,
 } from '@fortawesome/free-solid-svg-icons';
-import HeadlessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 
 import Button from '~/components/Button';
 import styles from './Header.module.scss';
 import images from '~/assets/images';
-import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { Menu as MenuItems } from '~/components/Popper';
-import { AccountItem as Account } from '~/components/AccountItem';
 import { EnglishIcon } from '~/components/Icons';
+import { FeedbackIcon } from '~/components/Icons';
 import { Image } from '~/components/Image';
+import Search from '../Search';
+// import { icon } from '@fortawesome/fontawesome-svg-core';
 
 // console.log(images.logo);
 const cx = classNames.bind(styles); // bind styles vào function cx giúp css tiện hơn
@@ -53,7 +48,8 @@ const MENU_ITEMS = [
         },
     },
     {
-        icon: <FontAwesomeIcon icon={faCircleQuestion} />,
+        // icon: <FontAwesomeIcon icon={faCircleQuestion} />,
+        icon: <FeedbackIcon />,
         title: 'Feedback and Help',
         to: '/feedback',
     },
@@ -66,15 +62,7 @@ const MENU_ITEMS = [
 // console.log(Array.isArray(MENU_ITEMS)); // true
 
 function Header() {
-    const [searchResult, setSearchResult] = useState([]);
-
     const currentUser = true;
-
-    useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([]);
-        }, 0);
-    }, []);
 
     const handleMenuChange = (menuItem) => {
         console.log(menuItem);
@@ -121,36 +109,8 @@ function Header() {
                 </div>
 
                 {/* Search: */}
-                <HeadlessTippy // hiển thị bảng search bên dưới thẻ input
-                    interactive={true}
-                    visible={searchResult.length > 0} // chỉ hiển thị HeadlessTippy khi có giá trị nhập trong thẻ input
-                    render={(attrs) => (
-                        <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                            <PopperWrapper>
-                                <h4 className={cx('search-title')}>Accounts</h4>
-                                <Account />
-                                <Account />
-                                <Account />
-                                <Account />
-                                <Account />
-                            </PopperWrapper>
-                        </div>
-                    )}
-                >
-                    <div className={cx('search')}>
-                        <input placeholder="Search..." spellCheck={false} />
-
-                        <button className={cx('clear')}>
-                            {/* <FontAwesomeIcon icon="fa-solid fa-circle-xmark" /> */}
-                            <FontAwesomeIcon icon={faCircleXmark} />
-                        </button>
-                        <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
-
-                        <button className={cx('search-btn')}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        </button>
-                    </div>
-                </HeadlessTippy>
+                {/* render ra component Search: */}
+                <Search />
 
                 {/* Action: */}
                 <div className={cx('actions')}>
