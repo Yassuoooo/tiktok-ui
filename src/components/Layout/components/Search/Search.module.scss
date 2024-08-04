@@ -79,3 +79,17 @@
     transform: translateY(-50%);
     color: rgba(22, 24, 35, 0.34);
 }
+
+.loading {
+    animation: spinner 1s linear infinite;
+}
+
+// tạo keyframes spinner css icon loading quay
+@keyframes spinner {
+    from {
+        transform: translateY(-50%) rotate(0);
+    }
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
