@@ -8,6 +8,7 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { AccountItem as Account } from '~/components/AccountItem';
 import { SearchIcon } from '~/components/Icons';
 import styles from './Search.module.scss';
+import { useDebounce } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
@@ -37,17 +38,17 @@ function Search() {
         setShowResults(true);
     };
 
+    const debounced = useDebounce(searchValue, 500);
+    console.log(debounced);
+
     useEffect(() => {
-        // setTimeout(() => {
-        //     setSearchResult([1]);
-        // }, 0);
-        if (!searchValue.trim()) {
+        if (!debounced.trim()) {
             // xóa khoảng cách bằng trim nếu ko có searchValue
             setSearchResult([]); // xóa mảng state searchResult nếu ko còn giá trị trên input
             return;
         }
         setLoading(true); // trong lúc nhập input sẽ hiển thị icon loading
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`) // fetch api get
+        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`) // fetch api get
             .then((res) => res.json()) // chuyển respone sang json
             .then((res) => {
                 setSearchResult(res.data); // dùng setSearchResult đẩy data trong respone vào [] của state searchResult
@@ -57,7 +58,7 @@ function Search() {
                 // ẩn icon loading nếu có lỗi
                 setLoading(false);
             });
-    }, [searchValue]);
+    }, [debounced]);
 
     return (
         <HeadlessTippy // hiển thị bảng search bên dưới thẻ input
