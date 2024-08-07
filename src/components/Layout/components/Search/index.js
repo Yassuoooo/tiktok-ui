@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+// import axios from 'axios';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +10,9 @@ import { AccountItem as Account } from '~/components/AccountItem';
 import { SearchIcon } from '~/components/Icons';
 import styles from './Search.module.scss';
 import { useDebounce } from '~/hooks';
+// import request from '~/utils/request';
+// import * as request from '~/utils/request'; // import tất cả các export của request.js
+import * as searchService from '~/services/searchService'; // import api search từ searchService
 
 const cx = classNames.bind(styles);
 
@@ -39,7 +43,7 @@ function Search() {
     };
 
     const debounced = useDebounce(searchValue, 500);
-    console.log(debounced);
+    //console.log(debounced);
 
     useEffect(() => {
         if (!debounced.trim()) {
@@ -48,16 +52,84 @@ function Search() {
             return;
         }
         setLoading(true); // trong lúc nhập input sẽ hiển thị icon loading
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`) // fetch api get
-            .then((res) => res.json()) // chuyển respone sang json
-            .then((res) => {
-                setSearchResult(res.data); // dùng setSearchResult đẩy data trong respone vào [] của state searchResult
-                setLoading(false); // sau khi nhập input xong sẽ ẩn icon loading
-            })
-            .catch(() => {
-                // ẩn icon loading nếu có lỗi
-                setLoading(false);
-            });
+
+        // Fetch:
+        // fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`) // fetch api get
+        //     .then((res) => res.json()) // dùng jsonparser chuyển respone từ json sang object javascript
+        //     .then((res) => {
+        //         setSearchResult(res.data); // dùng setSearchResult đẩy data trong respone vào [] của state searchResult
+        //         setLoading(false); // sau khi nhập input xong sẽ ẩn icon loading
+        //     })
+        //     .catch(() => {
+        //         // ẩn icon loading nếu có lỗi
+        //         setLoading(false);
+        //     });
+
+        // Axios:
+        // axios
+        //     .get(`https://tiktok.fullstack.edu.vn/api/users/search`, {
+        //         params: {
+        //             q: debounced,
+        //             type: 'less',
+        //         },
+        //     })
+        //     .then((res) => {
+        //         setSearchResult(res.data.data);
+        //         setLoading(false);
+        //         // console.log(res);
+        //     })
+        //     .catch(() => {
+        //         setLoading(false);
+        //     });
+
+        // ------
+
+        // Axios Instance:
+
+        // dùng kiểu Promise:
+        // request
+        //     .get(`users/search`, {
+        //         // https://tiktok.fullstack.edu.vn/api/users/search
+        //         params: {
+        //             q: debounced,
+        //             type: 'less',
+        //         },
+        //     })
+        //     .then((res) => {
+        //         setSearchResult(res.data); // response.data.data
+        //         setLoading(false);
+        //         console.log(res);
+        //     })
+        //     .catch(() => {
+        //         setLoading(false);
+        //     });
+
+        // dùng kiểu Async:
+        // const fetchApi = async () => {
+        //     try {
+        //         const respone = await request.get(`users/search`, {
+        //             // https://tiktok.fullstack.edu.vn/api/users/search
+        //             params: {
+        //                 q: debounced,
+        //                 type: 'less',
+        //             },
+        //         });
+        //         setSearchResult(respone.data); // respone.data.data
+        //         setLoading(false);
+        //     } catch (error) {
+        //         setLoading(false);
+        //     }
+        // };
+        // fetchApi();
+
+        // dùng kiểu tách ra api service riêng và import vào:
+        const fetchApi = async () => {
+            setLoading(true); // hiển thị icon loading trước khi gọi api
+            const result = await searchService.search(debounced); // chọc vào search trong file searchService và truyền q là debounced
+            setSearchResult(result);
+            setLoading(false); // ẩn icon loading sau khi gọi api
+        };
+        fetchApi();
     }, [debounced]);
 
     return (

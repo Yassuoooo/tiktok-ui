@@ -15,9 +15,9 @@ function Menu({ children, items = [], onChange = defaultFn }) {
     const [history, setHistory] = useState([{ data: items }]);
 
     const current = history[history.length - 1]; // lấy phần tử cuối mảng
-    console.log(history); // in ra mảng history
-    console.log(current); // in ra phần tử cuối mảng của history là data: items
-    console.log(current.data[2]); // in ra phần tử cuối của data trong current
+    // console.log(current); // in ra phần tử cuối mảng của history là data: items
+    // console.log(history); // in ra mảng history
+    // console.log(current.data[2]); // in ra phần tử cuối của data trong current
 
     const renderItems = () => {
         // return items.map((item, index) => (
