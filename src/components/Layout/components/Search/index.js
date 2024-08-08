@@ -25,7 +25,10 @@ function Search() {
     const inputRef = useRef();
 
     const hanldeSearch = (e) => {
-        setSearchValue(e.target.value);
+        const searchValue = e.target.value;
+        if (!searchValue.startsWith(' ')) {
+            setSearchValue(searchValue);
+        }
     };
 
     const handleClear = () => {
@@ -167,7 +170,7 @@ function Search() {
                     )}
                 {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
                 {/* hiển thị icon loading khi state loading là true */}
-                <button className={cx('search-btn')}>
+                <button className={cx('search-btn')} onMouseDown={(e) => e.preventDefault()}>
                     {/* <FontAwesomeIcon icon={faMagnifyingGlass} /> */}
                     <SearchIcon />
                 </button>

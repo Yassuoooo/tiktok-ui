@@ -11,7 +11,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
+import { Link } from 'react-router-dom';
 
+import routesConfig from '~/config/routes';
 import Button from '~/components/Button';
 import styles from './Header.module.scss';
 import images from '~/assets/images';
@@ -65,7 +67,7 @@ function Header() {
     const currentUser = true;
 
     const handleMenuChange = (menuItem) => {
-        console.log(menuItem);
+        //console.log(menuItem);
         switch (menuItem.type) {
             case 'language':
                 // handle change language
@@ -104,9 +106,9 @@ function Header() {
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 {/* Logo: */}
-                <div className={cx('logo')}>
+                <Link to={routesConfig.home} className={cx('logo')}>
                     <img src={images.logo} alt="Logo" />
-                </div>
+                </Link>
 
                 {/* Search: */}
                 {/* render ra component Search: */}
@@ -140,11 +142,9 @@ function Header() {
                                 alt="scum"
                             />
                         ) : (
-                            <>
-                                <button className={cx('more-btn')}>
-                                    <FontAwesomeIcon icon={faEllipsisVertical} />
-                                </button>
-                            </>
+                            <button className={cx('more-btn')}>
+                                <FontAwesomeIcon icon={faEllipsisVertical} />
+                            </button>
                         )}
                     </MenuItems>
                 </div>
