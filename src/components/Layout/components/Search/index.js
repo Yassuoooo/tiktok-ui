@@ -136,46 +136,48 @@ function Search() {
     }, [debounced]);
 
     return (
-        <HeadlessTippy // hiển thị bảng search bên dưới thẻ input
-            interactive={true}
-            visible={showResults && searchResult.length > 0}
-            // chỉ hiển thị HeadlessTippy khi showResults là true và có giá trị nhập trong thẻ input searchResult
-            render={(attrs) => (
-                <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                    <PopperWrapper>
-                        <h4 className={cx('search-title')}>Accounts</h4>
-                        {searchResult.map((result) => (
-                            <Account key={result.id} data={result} /> // truyền data là kết quả lấy từ api
-                        ))}
-                    </PopperWrapper>
+        <div>
+            <HeadlessTippy // hiển thị bảng search bên dưới thẻ input
+                interactive={true}
+                visible={showResults && searchResult.length > 0}
+                // chỉ hiển thị HeadlessTippy khi showResults là true và có giá trị nhập trong thẻ input searchResult
+                render={(attrs) => (
+                    <div className={cx('search-result')} tabIndex="-1" {...attrs}>
+                        <PopperWrapper>
+                            <h4 className={cx('search-title')}>Accounts</h4>
+                            {searchResult.map((result) => (
+                                <Account key={result.id} data={result} /> // truyền data là kết quả lấy từ api
+                            ))}
+                        </PopperWrapper>
+                    </div>
+                )}
+                onClickOutside={handleHideResults} // khi click ra ngoài khung search result sẽ ẩn đi
+            >
+                <div className={cx('search')}>
+                    <input
+                        ref={inputRef}
+                        value={searchValue}
+                        placeholder="Search..."
+                        spellCheck={false}
+                        onChange={hanldeSearch}
+                        onFocus={handleFocus} // khi focus thẻ input sẽ hiện lại bảng search
+                    />
+                    {!!searchValue && // convert searchValue sang kiểu boolean
+                        !loading && ( // nếu có searchValue và state loading là false thì mới render button clear
+                            <button className={cx('clear')} onClick={handleClear}>
+                                {/* <FontAwesomeIcon icon="fa-solid fa-circle-xmark" /> */}
+                                <FontAwesomeIcon icon={faCircleXmark} />
+                            </button>
+                        )}
+                    {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
+                    {/* hiển thị icon loading khi state loading là true */}
+                    <button className={cx('search-btn')} onMouseDown={(e) => e.preventDefault()}>
+                        {/* <FontAwesomeIcon icon={faMagnifyingGlass} /> */}
+                        <SearchIcon />
+                    </button>
                 </div>
-            )}
-            onClickOutside={handleHideResults} // khi click ra ngoài khung search result sẽ ẩn đi
-        >
-            <div className={cx('search')}>
-                <input
-                    ref={inputRef}
-                    value={searchValue}
-                    placeholder="Search..."
-                    spellCheck={false}
-                    onChange={hanldeSearch}
-                    onFocus={handleFocus} // khi focus thẻ input sẽ hiện lại bảng search
-                />
-                {!!searchValue && // convert searchValue sang kiểu boolean
-                    !loading && ( // nếu có searchValue và state loading là false thì mới render button clear
-                        <button className={cx('clear')} onClick={handleClear}>
-                            {/* <FontAwesomeIcon icon="fa-solid fa-circle-xmark" /> */}
-                            <FontAwesomeIcon icon={faCircleXmark} />
-                        </button>
-                    )}
-                {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-                {/* hiển thị icon loading khi state loading là true */}
-                <button className={cx('search-btn')} onMouseDown={(e) => e.preventDefault()}>
-                    {/* <FontAwesomeIcon icon={faMagnifyingGlass} /> */}
-                    <SearchIcon />
-                </button>
-            </div>
-        </HeadlessTippy>
+            </HeadlessTippy>
+        </div>
     );
 }
 

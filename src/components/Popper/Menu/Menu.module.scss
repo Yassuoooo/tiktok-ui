@@ -1,6 +1,6 @@
 .content {
     width: 224px;
-    
+
     .menu-item {
         margin-left: 0;
     }
@@ -9,6 +9,10 @@
 // Khung menu-item
 .menu-popper {
     padding-bottom: 8px;
+}
+
+.scroll-able {
+    overflow-y: auto;
 }
 
 // Header menu-item
@@ -27,7 +31,6 @@
     &.separate {
         border-top: 1px solid rgba(22, 24, 35, 0.12);
     }
-
 }
 
 // Header Language
@@ -35,6 +38,7 @@
     position: relative;
     height: 50px;
     margin-top: -8px;
+    flex-shrink: 0;
 }
 
 .back-btn {
@@ -50,4 +54,3 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
