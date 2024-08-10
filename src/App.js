@@ -1,7 +1,7 @@
 import { Fragment } from 'react'; // Fragment: component chứa ko sinh ra thẻ thật trong dom
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes } from '~/routes';
-import { DefaultLayout } from '~/components/Layout';
+import DefaultLayout from '~/layouts';
 
 function App() {
     return (
