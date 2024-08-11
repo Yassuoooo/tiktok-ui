@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
@@ -5,6 +6,7 @@ import styles from './Menu.module.scss';
 
 const cx = classNames.bind(styles);
 
+// Header của menu cấp 2 của English
 function Header({ title, onBack }) {
     return (
         <header className={cx('header')}>
@@ -15,5 +17,10 @@ function Header({ title, onBack }) {
         </header>
     );
 }
+
+Header.propTypes = {
+    title: PropTypes.string.isRequired,
+    onBack: PropTypes.func.isRequired,
+};
 
 export default Header;

@@ -98,7 +98,7 @@ function Header() {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Log Out',
             to: '/logout',
-            separate: true,
+            separate: true, // dấu gạch trên Log out
         },
     ];
 
