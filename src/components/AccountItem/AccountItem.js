@@ -4,7 +4,7 @@ import styles from './AccountItem.module.scss';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { Image } from '~/components/Image';
+import Image from '~/components/Image';
 
 const cx = classNames.bind(styles); // bind styles vào function cx giúp css tiện hơn
 
