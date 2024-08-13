@@ -19,7 +19,7 @@ const cx = classNames.bind(styles);
 function Search() {
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
-    const [showResults, setShowResults] = useState(true);
+    const [showResults, setShowResults] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const inputRef = useRef();
@@ -45,11 +45,11 @@ function Search() {
         setShowResults(true);
     };
 
-    const debounced = useDebounce(searchValue, 500);
-    //console.log(debounced);
+    const debouncedValue = useDebounce(searchValue, 500);
+    //console.log(debouncedValue);
 
     useEffect(() => {
-        if (!debounced.trim()) {
+        if (!debouncedValue.trim()) {
             // xóa khoảng cách bằng trim nếu ko có searchValue
             setSearchResult([]); // xóa mảng state searchResult nếu ko còn giá trị trên input
             return;
@@ -57,7 +57,7 @@ function Search() {
         setLoading(true); // trong lúc nhập input sẽ hiển thị icon loading
 
         // Fetch:
-        // fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`) // fetch api get
+        // fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debouncedValue)}&type=less`) // fetch api get
         //     .then((res) => res.json()) // dùng jsonparser chuyển respone từ json sang object javascript
         //     .then((res) => {
         //         setSearchResult(res.data); // dùng setSearchResult đẩy data trong respone vào [] của state searchResult
@@ -72,7 +72,7 @@ function Search() {
         // axios
         //     .get(`https://tiktok.fullstack.edu.vn/api/users/search`, {
         //         params: {
-        //             q: debounced,
+        //             q: debouncedValue,
         //             type: 'less',
         //         },
         //     })
@@ -94,7 +94,7 @@ function Search() {
         //     .get(`users/search`, {
         //         // https://tiktok.fullstack.edu.vn/api/users/search
         //         params: {
-        //             q: debounced,
+        //             q: debouncedValue,
         //             type: 'less',
         //         },
         //     })
@@ -113,7 +113,7 @@ function Search() {
         //         const respone = await request.get(`users/search`, {
         //             // https://tiktok.fullstack.edu.vn/api/users/search
         //             params: {
-        //                 q: debounced,
+        //                 q: debouncedValue,
         //                 type: 'less',
         //             },
         //         });
@@ -128,12 +128,12 @@ function Search() {
         // dùng kiểu tách ra api service riêng và import vào:
         const fetchApi = async () => {
             setLoading(true); // hiển thị icon loading trước khi gọi api
-            const result = await searchService.search(debounced); // chọc vào search trong file searchService và truyền q là debounced
+            const result = await searchService.search(debouncedValue); // chọc vào search trong file searchService và truyền q là debouncedValue
             setSearchResult(result);
             setLoading(false); // ẩn icon loading sau khi gọi api
         };
         fetchApi();
-    }, [debounced]);
+    }, [debouncedValue]);
 
     return (
         <div>

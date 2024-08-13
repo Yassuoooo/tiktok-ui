@@ -59,7 +59,10 @@ function Button({
         // rải các prop vào bằng spread
         <Comp className={classes} {...props}>
             {iconLeft && <span className={cx('icon-login')}>{iconLeft}</span>}
-            <span className={cx('title')}>{children}</span>
+            <span className={cx('title')}>
+                {/* style={{ marginLeft: '10px' }} */}
+                {children}
+            </span>
             {iconRight && <span className={cx('icon-login')}>{iconRight}</span>}
         </Comp>
     );

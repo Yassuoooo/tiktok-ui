@@ -46,6 +46,32 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
         });
     };
 
+    const handleBack = () => {
+        setHistory((prev) => prev.slice(0, prev.length - 1)); // xóa phần tử cuối mảng bằng slice
+    };
+
+    const renderResult = (attrs) => {
+        return (
+            <div className={cx('content')} tabIndex="-1" {...attrs}>
+                <PopperWrapper className={cx('menu-popper')}>
+                    {history.length >
+                        1 /* nếu mảng history nhiều hơn 1 item thì hiển thị component Header của English */ && (
+                        <Header
+                            title={current.title}
+                            onBack={handleBack} // click vào icon back
+                        />
+                    )}
+                    <div className={cx('scroll-able')}>{renderItems()}</div>
+                </PopperWrapper>
+            </div>
+        );
+    };
+
+    // xóa state history mới về lại state history cũ khi di chuột ra ngoài tippy
+    const handleResetToFirstPage = () => {
+        setHistory((prev) => prev.slice(0, 1));
+    };
+
     return (
         <Tippy
             // visible
@@ -54,24 +80,8 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
             offset={[12, 8]}
             delay={[0, 700]}
             placement="bottom-end"
-            render={(attrs) => (
-                <div className={cx('content')} tabIndex="-1" {...attrs}>
-                    <PopperWrapper className={cx('menu-popper')}>
-                        {history.length >
-                            1 /* nếu mảng history nhiều hơn 1 item thì hiển thị component Header của English */ && (
-                            <Header
-                                title={current.title}
-                                onBack={() => {
-                                    // click vào icon back
-                                    setHistory((prev) => prev.slice(0, prev.length - 1)); // xóa phần tử cuối mảng bằng slice
-                                }}
-                            />
-                        )}
-                        <div className={cx('scroll-able')}>{renderItems()}</div>
-                    </PopperWrapper>
-                </div>
-            )}
-            onHide={() => setHistory((prev) => prev.slice(0, 1))}
+            render={renderResult}
+            onHide={handleResetToFirstPage}
         >
             {children}
         </Tippy>
