@@ -15,6 +15,7 @@ function Button({
     iconRight,
     className,
     primary = false,
+    primarySuggest = false,
     outline = false,
     text = false,
     rounded = false,
@@ -42,6 +43,7 @@ function Button({
         [className]: className,
         // thêm CSS từ prop className nếu className được truyền vào, cho phép CSS từ bên ngoài component Button.
         primary,
+        primarySuggest,
         outline,
         text,
         rounded,
@@ -77,6 +79,7 @@ Button.propTypes = {
     iconRight: PropTypes.node,
     className: PropTypes.string,
     primary: PropTypes.bool,
+    primarySuggest: PropTypes.bool,
     outline: PropTypes.bool,
     text: PropTypes.bool,
     rounded: PropTypes.bool,

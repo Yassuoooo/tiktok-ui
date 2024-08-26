@@ -1,0 +1,30 @@
+// TippyContent css
+.wrapper {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 15px;
+    padding-right: 50px;
+}
+
+.content {
+    display: flex;
+}
+
+.avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.check {
+    margin-left: 4px;
+    font-size: 1.4rem;
+    color: #20d5ec;
+}
+
+.items,
+.follow,
+.like {
+    display: flex;
+}

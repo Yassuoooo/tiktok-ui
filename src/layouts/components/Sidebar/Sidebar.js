@@ -2,6 +2,8 @@ import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
 
 import Menu, { MenuItem } from './Menu';
+import SuggestedAccounts from './SuggestedAccounts';
+import SuggestedAccounts2 from './SuggestedAccounts/SuggestedAccounts2';
 import config from '~/config';
 import { ForYouIcon, FollowingIcon, LiveIcon } from '~/components/Icons';
 
@@ -15,6 +17,8 @@ function Sidebar() {
                 <MenuItem title="Following" to={config.routes.following} icon={<FollowingIcon />} />
                 <MenuItem title="LIVE" to={config.routes.live} icon={<LiveIcon />} />
             </Menu>
+            <SuggestedAccounts2 label="Suggested accounts" />
+            <SuggestedAccounts2 label="Following accounts" />
         </aside>
     );
 }
